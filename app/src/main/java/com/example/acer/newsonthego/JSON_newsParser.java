@@ -1,4 +1,35 @@
 package com.example.acer.newsonthego;
 
-public class JSON_newsParser {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class JSON_newsParser{
+    public static News_Stuff get_News_Stuff(String url,int index) throws JSONException{
+        News_Stuff news_stuff = new News_Stuff();
+        JSONObject rootObject = new JSONObject(url);
+        JSONArray jsonArray = rootObject.getJSONArray("articles");
+        JSONObject jsonObject = jsonArray.getJSONObject(index);
+        news_stuff.setTitle("BUSINNESS"); // NEED TO BE CHANGED
+        news_stuff.setAuthor(getString("author",jsonObject));
+        news_stuff.setHeadline(getString("title",jsonObject));
+        news_stuff.setDate(getString("publishedAt",jsonObject));
+        news_stuff.setUrl(getString("url",jsonObject));
+        return news_stuff;
+    }
+    public static JSONObject getJSONObject(String tagName,JSONObject jsonObject) throws JSONException{
+        return jsonObject.getJSONObject(tagName);
+    }
+
+    public static JSONArray getJSONArray(String tagName,JSONObject jsonObject) throws JSONException{
+        return jsonObject.getJSONArray(tagName);
+    }
+
+    public static String getString(String tagName,JSONObject jsonObject) throws JSONException {
+        return jsonObject.getString(tagName);
+    }
+
+    public static long getDate(String tagName,JSONObject jsonObject) throws JSONException{
+        return jsonObject.getLong(tagName);
+    }
 }
