@@ -5,12 +5,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class JSON_newsParser{
+    static String category;
+    public JSON_newsParser(String category){
+        this.category = category;
+    }
     public static News_Stuff get_News_Stuff(String url,int index) throws JSONException{
         News_Stuff news_stuff = new News_Stuff();
         JSONObject rootObject = new JSONObject(url);
         JSONArray jsonArray = rootObject.getJSONArray("articles");
         JSONObject jsonObject = jsonArray.getJSONObject(index);
-        news_stuff.setTitle("BUSINNESS"); // NEED TO BE CHANGED
+        news_stuff.setTitle(category); // NEED TO BE CHANGED
         news_stuff.setAuthor(getString("author",jsonObject));
         news_stuff.setHeadline(getString("title",jsonObject));
         news_stuff.setDate(getString("publishedAt",jsonObject));

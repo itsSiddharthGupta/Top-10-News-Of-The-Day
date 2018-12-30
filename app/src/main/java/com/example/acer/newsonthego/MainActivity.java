@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
             try{
                 for(count = 0;count<10;count++) {
                     news_stuff = new News_Stuff();
-                    news_stuff = JSON_newsParser.get_News_Stuff(data,count);
+                    JSON_newsParser json_newsParser = new JSON_newsParser(categoryCode);
+                    news_stuff = json_newsParser.get_News_Stuff(data,count);
                     news.add(news_stuff);
                 }
             }catch (Throwable t){
