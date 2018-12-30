@@ -98,8 +98,8 @@ public class MainCategory extends AppCompatActivity implements View.OnClickListe
         }
         //List_Activity list_activity = new List_Activity();
         Intent intent = new Intent(MainCategory.this,MainActivity.class);
-        /*intent.putExtra("COUNTRY_CODE",countryCode);
-        intent.putExtra("CATEGORY_CODE",categoryCode);*/
+        intent.putExtra("COUNTRY_CODE",countryCode);
+        intent.putExtra("CATEGORY_CODE",categoryCode);
         startActivity(intent);
     }
 }
