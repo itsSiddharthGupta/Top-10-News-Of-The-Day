@@ -2,6 +2,8 @@ package com.example.acer.newsonthego;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,12 @@ public class MainActivity extends AppCompatActivity {
     /*
     * Now i want to create a layout for making user to click the category for which he wants to view the news
     */
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +32,12 @@ public class MainActivity extends AppCompatActivity {
         newsList = findViewById(R.id.newsList);
         count = 0;
         news = new ArrayList<News_Stuff>();
-        JSONNewsStuffTask jsonNewsStuffTask = new JSONNewsStuffTask(MainActivity.this);
-        jsonNewsStuffTask.execute();
+        if(isNetworkAvailable()) {
+            JSONNewsStuffTask jsonNewsStuffTask = new JSONNewsStuffTask(MainActivity.this);
+            jsonNewsStuffTask.execute();
+        }else{
+            setContentView(R.layout.error_net);
+        }
 
 
     }
