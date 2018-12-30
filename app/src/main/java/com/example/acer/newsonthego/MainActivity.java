@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     ListView newsList;
     int count;
     ArrayList<News_Stuff> news;
+    String countryCode;
+    String categoryCode;
     /*
     * Now i want to create a layout for making user to click the category for which he wants to view the news
     */
@@ -32,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
         newsList = findViewById(R.id.newsList);
         count = 0;
         news = new ArrayList<News_Stuff>();
+        Bundle extras = getIntent().getExtras();
+        countryCode = extras.getString("COUNTRY_CODE");
+        categoryCode = extras.getString("CATEGORY_CODE");
+
         if(isNetworkAvailable()) {
             JSONNewsStuffTask jsonNewsStuffTask = new JSONNewsStuffTask(MainActivity.this);
             jsonNewsStuffTask.execute();
@@ -61,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected News_Stuff doInBackground(String... strings) {
             News_Stuff news_stuff = new News_Stuff();
-            String data = ((new HTTPNewsClient()).getNewsStuff());
+            String data = ((new HTTPNewsClient(countryCode,categoryCode)).getNewsStuff());
             try{
                 for(count = 0;count<10;count++) {
                     news_stuff = new News_Stuff();
