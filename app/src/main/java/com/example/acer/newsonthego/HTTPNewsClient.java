@@ -11,8 +11,16 @@ import java.net.URL;
 
 
 public class HTTPNewsClient {
-    private static String BASE_URL = "https://newsapi.org/v2/top-headlines?country=in&category=" +
-                                     "business&apiKey=d0f03357767249dba9395c94bfa3e1a9";
+    private String countryCode;
+    private String categoryCode;
+    private static String BASE_URL;
+
+    public HTTPNewsClient(String countryCode,String categoryCode){
+        this.countryCode = countryCode;
+        this.categoryCode = categoryCode;
+        BASE_URL = "https://newsapi.org/v2/top-headlines?country=" + countryCode + "&category=" +
+                categoryCode + "&apiKey=d0f03357767249dba9395c94bfa3e1a9";
+    }
 
     public static String getNewsStuff(){
         HttpURLConnection httpURLConnection = null;
