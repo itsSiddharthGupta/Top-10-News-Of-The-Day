@@ -3,6 +3,8 @@ package com.example.acer.newsonthego;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
@@ -18,6 +20,23 @@ public class MainCategory extends AppCompatActivity implements View.OnClickListe
     String countryCode;
     String categoryCode;
     Button btnFetch;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.about,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.credits){
+            Intent intent = new Intent();
+            intent.setClass(this,Credits.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
