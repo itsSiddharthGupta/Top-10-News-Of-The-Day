@@ -10,8 +10,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="85dp"
+        android:fontFamily="@font/alegreya_sans_sc_medium"
         android:padding="5dp"
         android:text="TITLE"
+        android:textColor="#000"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -24,8 +26,8 @@
         android:layout_marginEnd="15dp"
         android:padding="5dp"
         android:text="HEADLINE"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textColor="#595959"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/txtAuthor"
@@ -36,11 +38,12 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="15dp"
+        android:fontFamily="@font/andika"
         android:padding="5dp"
         android:text="Author"
         android:textAlignment="textEnd"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textColor="#000"
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/txtDate"
@@ -48,8 +51,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtDescription"
         android:layout_alignStart="@+id/txtTitle"
+        android:fontFamily="@font/duru_sans"
         android:padding="5dp"
         android:text="Dated :- "
-        android:textStyle="bold" />
+        android:textColor="#000"
+        android:textSize="14sp" />
 
 </RelativeLayout>
