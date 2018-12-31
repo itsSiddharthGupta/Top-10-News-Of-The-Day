@@ -11,15 +11,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtSource"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="5dp"
-            android:text="Powered By NewsAPI"
-            android:textAlignment="center" />
-
         <ListView
             android:id="@+id/newsList"
             android:layout_width="match_parent"
