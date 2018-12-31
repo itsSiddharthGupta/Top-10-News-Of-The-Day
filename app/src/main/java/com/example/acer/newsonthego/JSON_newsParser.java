@@ -22,7 +22,7 @@ public class JSON_newsParser{
             news_stuff.setAuthor(getString("author",jsonObject));
 
         news_stuff.setHeadline(getString("title",jsonObject));
-        news_stuff.setDate(getString("publishedAt",jsonObject));
+        news_stuff.setDate(getString("publishedAt",jsonObject).substring(0,10));
         news_stuff.setUrl(getString("url",jsonObject));
         return news_stuff;
     }
