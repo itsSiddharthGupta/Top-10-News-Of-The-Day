@@ -15,7 +15,12 @@ public class JSON_newsParser{
         JSONArray jsonArray = rootObject.getJSONArray("articles");
         JSONObject jsonObject = jsonArray.getJSONObject(index);
         news_stuff.setTitle(category);
-        news_stuff.setAuthor(getString("author",jsonObject));
+
+        if(getString("author",jsonObject).equalsIgnoreCase("null"))
+            news_stuff.setAuthor("");
+        else
+            news_stuff.setAuthor(getString("author",jsonObject));
+
         news_stuff.setHeadline(getString("title",jsonObject));
         news_stuff.setDate(getString("publishedAt",jsonObject));
         news_stuff.setUrl(getString("url",jsonObject));
