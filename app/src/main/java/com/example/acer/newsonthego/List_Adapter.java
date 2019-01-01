@@ -57,6 +57,10 @@ public class List_Adapter extends BaseAdapter {
         return view;
     }
 
+    public void clear() {
+        news.clear();
+    }
+
 
 
     /*private class JSONNewsStuffTask extends AsyncTask<String,Void,News_Stuff> {
