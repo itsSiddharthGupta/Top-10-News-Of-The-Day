@@ -1,14 +1,18 @@
 package com.example.acer.newsonthego;
 
+import android.app.LoaderManager;
 import android.app.ProgressDialog;
+import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,12 +22,13 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<News_Stuff>> {
     ListView newsList;
     int count;
-    ArrayList<News_Stuff> news;
     String countryCode;
     String categoryCode;
+    ProgressDialog progressDialog;
+    List_Adapter list_adapter;
     /*
     * Now i want to create a layout for making user to click the category for which he wants to view the news
     */
@@ -57,72 +62,50 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         newsList = findViewById(R.id.newsList);
         count = 0;
-        news = new ArrayList<News_Stuff>();
         Bundle extras = getIntent().getExtras();
         countryCode = extras.getString("COUNTRY_CODE");
         categoryCode = extras.getString("CATEGORY_CODE");
+        progressDialog = new ProgressDialog(MainActivity.this);
 
         if(isNetworkAvailable()) {
-            JSONNewsStuffTask jsonNewsStuffTask = new JSONNewsStuffTask(MainActivity.this);
-            jsonNewsStuffTask.execute();
+            getLoaderManager().initLoader(0,null,this);
         }else{
             setContentView(R.layout.error_net);
         }
-
-
     }
-    private class JSONNewsStuffTask extends AsyncTask<String,Void,News_Stuff> {
-        Context context;
-        ProgressDialog progressDialog;
 
-        public JSONNewsStuffTask(Context context){
-            this.context = context;
-            progressDialog = new ProgressDialog(context);
+    @Override
+    public Loader<ArrayList<News_Stuff>> onCreateLoader(int id, Bundle args) {
+        News_Stuff_Loader news_stuff_loader = new News_Stuff_Loader(MainActivity.this,countryCode,categoryCode);
+        progressDialog.setTitle("Please wait while the news are fetching...");
+        progressDialog.show();
+        return news_stuff_loader;
+    }
 
+    @Override
+    public void onLoadFinished(Loader<ArrayList<News_Stuff>> loader,final ArrayList<News_Stuff> news) {
+
+        list_adapter = new List_Adapter(MainActivity.this,news);
+        newsList.setAdapter(list_adapter);
+
+        if(progressDialog.isShowing()){
+            progressDialog.dismiss();
         }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.setTitle("Please wait while the news are fetching...");
-            progressDialog.show();
-        }
-
-        @Override
-        protected News_Stuff doInBackground(String... strings) {
-            News_Stuff news_stuff = new News_Stuff();
-            String data = ((new HTTPNewsClient(countryCode,categoryCode)).getNewsStuff());
-            try{
-                for(count = 0;count<10;count++) {
-                    news_stuff = new News_Stuff();
-                    JSON_newsParser json_newsParser = new JSON_newsParser(categoryCode);
-                    news_stuff = json_newsParser.get_News_Stuff(data,count);
-                    news.add(news_stuff);
-                }
-            }catch (Throwable t){
-                t.printStackTrace();
+        newsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String url = news.get(position).getUrl();
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
             }
-            return news_stuff;
-        }
+        });
+    }
 
-        @Override
-        protected void onPostExecute(News_Stuff news_stuff) {
-            super.onPostExecute(news_stuff);
-            List_Adapter list_adapter = new List_Adapter(MainActivity.this,news);
-            newsList.setAdapter(list_adapter);
-            if(progressDialog.isShowing()){
-                progressDialog.dismiss();
-            }
-
-            newsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String url = news.get(position).getUrl();
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(url));
-                    startActivity(intent);
-                }
-            });
-        }
+    @Override
+    public void onLoaderReset(Loader<ArrayList<News_Stuff>> loader) {
+            Log.v("TAG","Loader Reset");
+            list_adapter.clear();
     }
 }
