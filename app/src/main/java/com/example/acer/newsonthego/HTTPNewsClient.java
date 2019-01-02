@@ -48,7 +48,12 @@ public class HTTPNewsClient {
             t.printStackTrace();
         }finally {
             try {
-                inputStream.close();
+                //If the network is disconnected in between fetching then the input stream is empty or null
+                //And closing a null inputStream will give us exception java.lang.NullPointerException:
+                        // Attempt to invoke virtual method 'void java.io.InputStream.close()' on a null object reference
+                //Hence we need to mange this to avoid crashing in our app
+                if(inputStream != null)
+                    inputStream.close();
                 httpURLConnection.disconnect();
             }catch (IOException e){
                 e.printStackTrace();
