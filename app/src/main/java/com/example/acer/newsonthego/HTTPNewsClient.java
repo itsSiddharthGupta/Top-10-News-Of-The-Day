@@ -1,5 +1,6 @@
 package com.example.acer.newsonthego;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -46,9 +47,14 @@ public class HTTPNewsClient {
             return stringBuffer.toString();
         }catch (Throwable t){
             t.printStackTrace();
+            Log.i("SEE","What Happenend");
         }finally {
             try {
-                inputStream.close();
+                //If the connection is abandoned in between fetching then the input stream will be null bcz it recieved nothing
+                //And if we try to close inputStream i.e. null it will give us
+                // java.lang.NullPointerException: Attempt to invoke virtual method 'void java.io.InputStream.close()' on a null object reference
+                if(inputStream != null)
+                    inputStream.close();
                 httpURLConnection.disconnect();
             }catch (IOException e){
                 e.printStackTrace();
