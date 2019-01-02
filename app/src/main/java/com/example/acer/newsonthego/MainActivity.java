@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,37 +93,53 @@ public class MainActivity extends AppCompatActivity {
         protected News_Stuff doInBackground(String... strings) {
             News_Stuff news_stuff = new News_Stuff();
             String data = ((new HTTPNewsClient(countryCode,categoryCode)).getNewsStuff());
-            try{
-                for(count = 0;count<10;count++) {
-                    news_stuff = new News_Stuff();
-                    JSON_newsParser json_newsParser = new JSON_newsParser(categoryCode);
-                    news_stuff = json_newsParser.get_News_Stuff(data,count);
-                    news.add(news_stuff);
+
+            //If the connectin is abandoned in between then the data will recieve null and hence we have to hanndle this error
+            //in order to handle the crash. So if the data is null then we return a null to postExecute
+            if(data != null) {
+                try {
+                    for (count = 0; count < 10; count++) {
+                        news_stuff = new News_Stuff();
+                        JSON_newsParser json_newsParser = new JSON_newsParser(categoryCode);
+                        news_stuff = json_newsParser.get_News_Stuff(data, count);
+                        news.add(news_stuff);
+                    }
+                } catch (Throwable t) {
+                    t.printStackTrace();
                 }
-            }catch (Throwable t){
-                t.printStackTrace();
+                return news_stuff;
             }
-            return news_stuff;
+            return null;
         }
 
         @Override
         protected void onPostExecute(News_Stuff news_stuff) {
             super.onPostExecute(news_stuff);
+            Log.i("TAG","Onpostexecute" + news_stuff);
             List_Adapter list_adapter = new List_Adapter(MainActivity.this,news);
-            newsList.setAdapter(list_adapter);
-            if(progressDialog.isShowing()){
+            if (progressDialog.isShowing()) {
                 progressDialog.dismiss();
             }
 
-            newsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String url = news.get(position).getUrl();
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(url));
-                    startActivity(intent);
-                }
-            });
+            //if we recieve a null object from doInBackground then it means that the network connection is disrupted
+            //Hence instead of crashing we will display network_error message to the user
+
+            if(news_stuff != null) {
+                newsList.setAdapter(list_adapter);
+
+
+                newsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String url = news.get(position).getUrl();
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(url));
+                        startActivity(intent);
+                    }
+                });
+            }else{
+                setContentView(R.layout.error_net);
+            }
         }
     }
 }
