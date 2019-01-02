@@ -86,21 +86,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<ArrayList<News_Stuff>> loader,final ArrayList<News_Stuff> news) {
 
         list_adapter = new List_Adapter(MainActivity.this,news);
-        newsList.setAdapter(list_adapter);
+
 
         if(progressDialog.isShowing()){
             progressDialog.dismiss();
         }
 
-        newsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String url = news.get(position).getUrl();
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
-                startActivity(intent);
-            }
-        });
+        //if the network is disrupted then instead of crashing we need to display the msg of network error
+        if(news != null) {
+            newsList.setAdapter(list_adapter);
+            newsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String url = news.get(position).getUrl();
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+                    startActivity(intent);
+                }
+            });
+        }else{
+            setContentView(R.layout.error_net);
+        }
     }
 
     @Override
