@@ -7,12 +7,28 @@
     android:padding="5dp">
 
     <TextView
-        android:id="@+id/txtTitle"
+        android:id="@+id/txtNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="85dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/alegreya_sans_sc_medium"
+        android:padding="5dp"
+        android:text="1"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txtDescription"
+        android:layout_alignTop="@+id/txtAuthor"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/txtAuthor"
         android:fontFamily="@font/alegreya_sans_sc_medium"
         android:padding="5dp"
         android:text="TITLE"
@@ -34,7 +50,7 @@
 
     <TextView
         android:id="@+id/txtAuthor"
-        android:layout_width="200dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -53,10 +69,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtDescription"
-        android:layout_alignStart="@+id/txtTitle"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="21dp"
         android:fontFamily="@font/duru_sans"
         android:padding="5dp"
         android:text="Dated :- "
+        android:textAlignment="textStart"
         android:textColor="#000"
         android:textSize="14sp" />
 

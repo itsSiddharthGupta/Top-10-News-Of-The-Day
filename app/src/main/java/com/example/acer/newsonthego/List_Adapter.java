@@ -22,6 +22,7 @@ public class List_Adapter extends BaseAdapter {
     TextView txtAuthor;
     TextView txtDescription;
     TextView txtDate;
+    TextView txtNumber;
     ArrayList<News_Stuff> news;
     RelativeLayout relativeLayout;
     int[] newsBackground = {R.color.newsBackground1,R.color.newsBackground2,R.color.newsBackground3,R.color.newsBackground4
@@ -52,10 +53,13 @@ public class List_Adapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         view = layoutInflater.inflate(R.layout.list_view,null);
+        int no =  position + 1;
         txtTitle = view.findViewById(R.id.txtTitle);
         txtAuthor = view.findViewById(R.id.txtAuthor);
         txtDescription = view.findViewById(R.id.txtDescription);
         txtDate = view.findViewById(R.id.txtDate);
+        txtNumber = view.findViewById(R.id.txtNumber);
+        txtNumber.setText(String.valueOf(no) + ") ");
         txtTitle.setText(news.get(position).getTitle());
         txtAuthor.setText(news.get(position).getAuthor());
         txtDescription.setText(news.get(position).getHeadline());
