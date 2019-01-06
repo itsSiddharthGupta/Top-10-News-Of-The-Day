@@ -29,9 +29,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     String categoryCode;
     ProgressDialog progressDialog;
     List_Adapter list_adapter;
-    /*
-    * Now i want to create a layout for making user to click the category for which he wants to view the news
-    */
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

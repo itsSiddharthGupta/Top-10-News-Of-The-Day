@@ -60,48 +60,4 @@ public class List_Adapter extends BaseAdapter {
     public void clear() {
         news.clear();
     }
-
-
-
-    /*private class JSONNewsStuffTask extends AsyncTask<String,Void,News_Stuff> {
-        Context context;
-        ProgressDialog progressDialog;
-        int position;
-        public JSONNewsStuffTask(Context context,int position){
-            this.context = context;
-            this.position = position;
-            progressDialog = new ProgressDialog(context);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.setTitle("Please wait while the news are fetching...");
-        }
-
-        @Override
-        protected News_Stuff doInBackground(String... strings) {
-            News_Stuff news_stuff = new News_Stuff();
-            String data = ((new HTTPNewsClient()).getNewsStuff());
-            try{
-                news_stuff = JSON_newsParser.get_News_Stuff(data,position);
-            }catch (Throwable t){
-                t.printStackTrace();
-            }
-            return news_stuff;
-        }
-
-        @Override
-        protected void onPostExecute(News_Stuff news_stuff) {
-            super.onPostExecute(news_stuff);
-            txtTitle.setText(news_stuff.getTitle());
-            txtAuthor.setText(news_stuff.getAuthor());
-            txtDescription.setText(news_stuff.getHeadline());
-            txtDate.setText(news_stuff.getDate());
-
-            if(progressDialog.isShowing()){
-                progressDialog.dismiss();
-            }
-        }
-    }*/
 }
