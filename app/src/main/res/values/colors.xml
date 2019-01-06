@@ -3,4 +3,17 @@
     <color name="colorPrimary">#cc6600</color>
     <color name="colorPrimaryDark">#804000</color>
     <color name="colorAccent">#D81B60</color>
+
+
+
+        <color name="newsBackground1">#ff8080</color>
+        <color name="newsBackground2">#ffcc66</color>
+        <color name="newsBackground3">#ff9999</color>
+        <color name="newsBackground4">#cca300</color>
+        <color name="newsBackground5">#ff99ff</color>
+        <color name="newsBackground6">#b3e6ff</color>
+        <color name="newsBackground7">#ccff66</color>
+        <color name="newsBackground8">#809fff</color>
+        <color name="newsBackground9">#999966</color>
+        <color name="newsBackground10">#b2b266</color>
 </resources>
